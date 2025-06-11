@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Dashboard</h2>
+<form method="post" action="{{ url_for('add_sensor') }}" class="mb-3">
+  <div class="input-group">
+    <input class="form-control" type="text" name="name" placeholder="Sensor name" required>
+    <button class="btn btn-success" type="submit">Add Sensor</button>
+  </div>
+</form>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Value</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for s in sensors %}
+    <tr>
+      <td>{{ s.name }}</td>
+      <td>{{ s.value or '-' }}</td>
+      <td>
+        <form method="post" action="{{ url_for('update_sensor', sensor_id=s.id) }}" class="d-flex">
+          <input class="form-control me-2" type="text" name="value" placeholder="New value">
+          <button class="btn btn-primary" type="submit">Update</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
